@@ -1,3 +1,4 @@
+import { Menu } from "@/components/Menu"
 import { PropertyTable } from "@/components/PropertyTable"
 import { supabase } from "@/lib/supabaseClient"
 import Link from "next/link"
@@ -12,7 +13,7 @@ const PropertiesPage = async () => {
   return (
     <>
       <div className="flex items-center justify-between">
-        <h1 className="uppercase font-semibold text-sm">Properties</h1>
+        <Menu label="Properties" />
         <Link href="/properties/new" className="btn btn-ghost rounded-none">
           New Property
         </Link>

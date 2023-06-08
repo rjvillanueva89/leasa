@@ -1,3 +1,4 @@
+import { TenantForm } from "@/components/TenantForm"
 import Link from "next/link"
 
 const NewTenant = () => {
@@ -9,27 +10,7 @@ const NewTenant = () => {
           Back
         </Link>
       </div>
-      <div className="flex flex-col items-center gap-4">
-        <div className="form-control w-full max-w-sm">
-          <label className="label">
-            <span className="label-text">Full Name</span>
-          </label>
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="input input-bordered w-full max-w-sm rounded-none"
-          />
-        </div>
-        <div className="form-control w-full max-w-sm">
-          <label className="label">
-            <span className="label-text">Notes</span>
-          </label>
-          <textarea
-            className="textarea textarea-bordered rounded-none"
-            placeholder="Notes"
-          ></textarea>
-        </div>
-      </div>
+      <TenantForm />
     </>
   )
 }

@@ -29,6 +29,27 @@
       "when": 1686192601659,
       "tag": "0003_wise_sentry",
       "breakpoints": false
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1686216962094,
+      "tag": "0004_last_glorian",
+      "breakpoints": false
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1686217988826,
+      "tag": "0005_orange_gideon",
+      "breakpoints": false
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1686218273884,
+      "tag": "0006_useful_jane_foster",
+      "breakpoints": false
     }
   ]
 }

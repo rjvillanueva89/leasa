@@ -1,9 +1,10 @@
+import { Menu } from "@/components/Menu"
 import { supabase } from "@/lib/supabaseClient"
 import dayjs from "dayjs"
 import Link from "next/link"
 import { Database } from "../../lib/database.types"
 
-type Tenant = Database["public"]["Tables"]["tenants"]["Row"]
+export type Tenant = Database["public"]["Tables"]["tenants"]["Row"]
 
 const TenantsPage = async () => {
   const { data } = await supabase.from("tenants").select()
@@ -12,7 +13,7 @@ const TenantsPage = async () => {
   return (
     <>
       <div className="flex items-center justify-between">
-        <h1 className="uppercase font-semibold text-sm">Tenants</h1>
+        <Menu label="Tenants" />
         <Link href="/tenants/new" className="btn btn-ghost rounded-none">
           New Tenant
         </Link>
@@ -20,16 +21,19 @@ const TenantsPage = async () => {
       <table className="table">
         <thead>
           <tr>
-            <th>Full Name</th>
-            <th>Label</th>
+            <th>Details</th>
+            <th>Phone</th>
             <th>Created at</th>
           </tr>
         </thead>
         <tbody>
-          {tenants.map(({ id, fullname, label, created_at }) => (
+          {tenants.map(({ id, fullname, email, phone, created_at }) => (
             <tr key={id}>
-              <td>{fullname}</td>
-              <td>{label}</td>
+              <td>
+                {fullname}
+                <small className="block">{email}</small>
+              </td>
+              <td>{phone}</td>
               <td>{dayjs(created_at).format("MMM DD, YYYY")}</td>
             </tr>
           ))}

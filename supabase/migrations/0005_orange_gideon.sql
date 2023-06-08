@@ -1,0 +1,1 @@
+ALTER TABLE "tenants" RENAME COLUMN "label" TO "phone";

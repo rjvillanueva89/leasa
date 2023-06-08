@@ -34,11 +34,12 @@ export interface Database {
   }
   public: {
     Tables: {
-      contract: {
+      contracts: {
         Row: {
           created_at: string
           end_date: string | null
           id: string
+          property_id: string
           start_date: string
           tenant_id: string
         }
@@ -46,6 +47,7 @@ export interface Database {
           created_at?: string
           end_date?: string | null
           id?: string
+          property_id: string
           start_date: string
           tenant_id: string
         }
@@ -53,9 +55,24 @@ export interface Database {
           created_at?: string
           end_date?: string | null
           id?: string
+          property_id?: string
           start_date?: string
           tenant_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "contracts_property_id_properties_id_fk"
+            columns: ["property_id"]
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contracts_tenant_id_tenants_id_fk"
+            columns: ["tenant_id"]
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       properties: {
         Row: {
@@ -82,32 +99,37 @@ export interface Database {
           notes?: string | null
           updated_at?: string | null
         }
+        Relationships: []
       }
       tenants: {
         Row: {
           created_at: string
+          email: string
           fullname: string
           id: string
-          label: string
           notes: string | null
+          phone: string
           updated_at: string | null
         }
         Insert: {
           created_at?: string
+          email: string
           fullname: string
           id?: string
-          label: string
           notes?: string | null
+          phone: string
           updated_at?: string | null
         }
         Update: {
           created_at?: string
+          email?: string
           fullname?: string
           id?: string
-          label?: string
           notes?: string | null
+          phone?: string
           updated_at?: string | null
         }
+        Relationships: []
       }
     }
     Views: {
@@ -159,6 +181,14 @@ export interface Database {
           public?: boolean | null
           updated_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "buckets_owner_fkey"
+            columns: ["owner"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       migrations: {
         Row: {
@@ -179,6 +209,7 @@ export interface Database {
           id?: number
           name?: string
         }
+        Relationships: []
       }
       objects: {
         Row: {
@@ -217,6 +248,20 @@ export interface Database {
           updated_at?: string | null
           version?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "objects_bucketId_fkey"
+            columns: ["bucket_id"]
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "objects_owner_fkey"
+            columns: ["owner"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
