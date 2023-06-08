@@ -7,6 +7,7 @@ import clsx from "clsx"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { Button } from "./Button"
 
 const FormSchema = z.object({
   fullname: z.string().min(1),
@@ -27,7 +28,7 @@ export const TenantForm = ({ data }: Props) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormFields>({
     resolver: zodResolver(FormSchema),
     defaultValues: data
@@ -110,9 +111,9 @@ export const TenantForm = ({ data }: Props) => {
         ></textarea>
       </div>
       <div className="flex w-full justify-end">
-        <button type="submit" className="btn btn-ghost rounded-none">
+        <Button type="submit" loading={isSubmitting}>
           Submit
-        </button>
+        </Button>
       </div>
     </form>
   )
