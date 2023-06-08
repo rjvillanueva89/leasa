@@ -1,40 +1,23 @@
+import { PropertyTable } from "@/components/PropertyTable"
 import { supabase } from "@/lib/supabaseClient"
-import dayjs from "dayjs"
 import Link from "next/link"
 import { Database } from "../../lib/database.types"
 
-type Tenant = Database["public"]["Tables"]["tenants"]["Row"]
+export type Property = Database["public"]["Tables"]["properties"]["Row"]
 
 const PropertiesPage = async () => {
-  const { data } = await supabase.from("tenants").select()
-  const tenants = data as Tenant[]
+  const { data } = await supabase.from("properties").select()
+  const properties = data as Property[]
 
   return (
     <>
       <div className="flex items-center justify-between">
         <h1 className="uppercase font-semibold text-sm">Properties</h1>
-        <Link href="/tenants/new" className="btn btn-ghost rounded-none">
+        <Link href="/properties/new" className="btn btn-ghost rounded-none">
           New Property
         </Link>
       </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Full Name</th>
-            <th>Label</th>
-            <th>Created at</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tenants.map(({ id, fullname, label, created_at }) => (
-            <tr key={id}>
-              <td>{fullname}</td>
-              <td>{label}</td>
-              <td>{dayjs(created_at).format("MMM DD, YYYY")}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <PropertyTable data={properties} />
     </>
   )
 }

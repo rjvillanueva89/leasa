@@ -1,5 +1,6 @@
 import { sql, type InferModel } from "drizzle-orm"
 import { numeric, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
+import { createInsertSchema } from "drizzle-zod"
 
 export const properties = pgTable("properties", {
   id: uuid("id")
@@ -13,3 +14,5 @@ export const properties = pgTable("properties", {
 })
 
 export type Properties = InferModel<typeof properties>
+
+export const insertPropertySchema = createInsertSchema(properties)
