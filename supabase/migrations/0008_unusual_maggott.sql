@@ -1,0 +1,1 @@
+ALTER TABLE "contracts" RENAME COLUMN "state" TO "status";

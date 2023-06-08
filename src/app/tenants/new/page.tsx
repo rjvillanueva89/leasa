@@ -1,7 +1,7 @@
 import { TenantForm } from "@/components/TenantForm"
 import Link from "next/link"
 
-const NewTenant = () => {
+const NewTenant = async () => {
   return (
     <>
       <div className="flex items-center justify-between">

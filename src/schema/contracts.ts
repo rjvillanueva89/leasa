@@ -1,5 +1,12 @@
 import { sql, type InferModel } from "drizzle-orm"
-import { date, pgTable, timestamp, uuid } from "drizzle-orm/pg-core"
+import {
+  date,
+  numeric,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+} from "drizzle-orm/pg-core"
 import { properties } from "./properties"
 import { tenants } from "./tenants"
 
@@ -15,6 +22,8 @@ export const contracts = pgTable("contracts", {
     .references(() => properties.id),
   start_date: date("start_date").notNull(),
   end_date: date("end_date"),
+  monthly: numeric("monthly").notNull(),
+  status: text("status", { enum: ["active", "inactive"] }),
   created_at: timestamp("created_at").defaultNow().notNull(),
 })
 
