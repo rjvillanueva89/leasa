@@ -1,10 +1,8 @@
 import { Menu } from "@/components/Menu"
 import { PropertyTable } from "@/components/PropertyTable"
 import { supabase } from "@/lib/supabaseClient"
+import { Property } from "@/schema/properties"
 import Link from "next/link"
-import { Database } from "../../lib/database.types"
-
-export type Property = Database["public"]["Tables"]["properties"]["Row"]
 
 const PropertiesPage = async () => {
   const { data } = await supabase.from("properties").select()

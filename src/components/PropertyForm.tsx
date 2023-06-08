@@ -1,6 +1,7 @@
 "use client"
 
 import { supabase } from "@/lib/supabaseClient"
+import { Property } from "@/schema/properties"
 import { zodResolver } from "@hookform/resolvers/zod"
 import clsx from "clsx"
 import { useRouter } from "next/navigation"
@@ -10,12 +11,16 @@ import { z } from "zod"
 const FormSchema = z.object({
   name: z.string().min(1),
   monthly: z.string().min(1),
-  notes: z.string(),
+  notes: z.string().nullable(),
 })
 
 type FormFields = z.infer<typeof FormSchema>
 
-export const PropertyForm = () => {
+interface Props {
+  data?: Property
+}
+
+export const PropertyForm = ({ data }: Props) => {
   const router = useRouter()
 
   const {
@@ -24,10 +29,24 @@ export const PropertyForm = () => {
     formState: { errors },
   } = useForm<FormFields>({
     resolver: zodResolver(FormSchema),
+    defaultValues: data
+      ? {
+          name: data.name,
+          monthly: data.monthly,
+          notes: data.notes,
+        }
+      : {},
   })
 
   const onSubmit = async ({ name, monthly, notes }: FormFields) => {
-    await supabase.from("properties").insert({ name, monthly, notes })
+    if (data) {
+      await supabase
+        .from("properties")
+        .update({ name, monthly, notes })
+        .eq("id", data.id)
+    } else {
+      await supabase.from("properties").insert({ name, monthly, notes })
+    }
     router.push("/properties")
   }
 

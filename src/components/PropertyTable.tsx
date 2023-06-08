@@ -1,5 +1,6 @@
-import { Property } from "@/app/properties/page"
+import { Property } from "@/schema/properties"
 import dayjs from "dayjs"
+import { PropertyActions } from "./PropertyActions"
 
 interface Props {
   data: Property[]
@@ -13,6 +14,7 @@ export const PropertyTable = ({ data }: Props) => {
           <th>Name</th>
           <th>Monthly</th>
           <th>Created at</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -22,6 +24,9 @@ export const PropertyTable = ({ data }: Props) => {
               <td>{name}</td>
               <td>{monthly}</td>
               <td>{dayjs(created_at).format("MMM DD, YYYY")}</td>
+              <td>
+                <PropertyActions id={id} />
+              </td>
             </tr>
           )
         })}

@@ -7,7 +7,7 @@ interface Props {
   params: { id: string }
 }
 
-const Tenant = async ({ params }: Props) => {
+const EditTenant = async ({ params }: Props) => {
   const { data } = await supabase
     .from("tenants")
     .select()
@@ -28,4 +28,4 @@ const Tenant = async ({ params }: Props) => {
   )
 }
 
-export default Tenant
+export default EditTenant
