@@ -5,16 +5,16 @@ import { Database } from "../../lib/database.types"
 
 type Tenant = Database["public"]["Tables"]["tenants"]["Row"]
 
-const TenantsPage = async () => {
+const PropertiesPage = async () => {
   const { data } = await supabase.from("tenants").select()
   const tenants = data as Tenant[]
 
   return (
     <>
       <div className="flex items-center justify-between">
-        <h1 className="uppercase font-semibold text-sm">Tenants</h1>
+        <h1 className="uppercase font-semibold text-sm">Properties</h1>
         <Link href="/tenants/new" className="btn btn-ghost rounded-none">
-          New Tenant
+          New Property
         </Link>
       </div>
       <table className="table">
@@ -39,4 +39,4 @@ const TenantsPage = async () => {
   )
 }
 
-export default TenantsPage
+export default PropertiesPage

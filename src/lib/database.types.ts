@@ -34,6 +34,55 @@ export interface Database {
   }
   public: {
     Tables: {
+      contract: {
+        Row: {
+          created_at: string
+          end_date: string | null
+          id: string
+          start_date: string
+          tenant_id: string
+        }
+        Insert: {
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          start_date: string
+          tenant_id: string
+        }
+        Update: {
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          start_date?: string
+          tenant_id?: string
+        }
+      }
+      properties: {
+        Row: {
+          created_at: string
+          id: string
+          monthly: number
+          name: string
+          notes: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          monthly: number
+          name: string
+          notes?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          monthly?: number
+          name?: string
+          notes?: string | null
+          updated_at?: string | null
+        }
+      }
       tenants: {
         Row: {
           created_at: string
