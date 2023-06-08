@@ -1,6 +1,7 @@
 "use client"
 
 import { supabase } from "@/lib/supabaseClient"
+import { Tenant } from "@/schema/tenants"
 import { zodResolver } from "@hookform/resolvers/zod"
 import clsx from "clsx"
 import { useRouter } from "next/navigation"
@@ -11,12 +12,16 @@ const FormSchema = z.object({
   fullname: z.string().min(1),
   email: z.string().min(1),
   phone: z.string().min(1),
-  notes: z.string(),
+  notes: z.string().nullable(),
 })
 
 type FormFields = z.infer<typeof FormSchema>
 
-export const TenantForm = () => {
+interface Props {
+  data?: Tenant
+}
+
+export const TenantForm = ({ data }: Props) => {
   const router = useRouter()
 
   const {
@@ -25,10 +30,25 @@ export const TenantForm = () => {
     formState: { errors },
   } = useForm<FormFields>({
     resolver: zodResolver(FormSchema),
+    defaultValues: data
+      ? {
+          fullname: data.fullname,
+          email: data.email,
+          phone: data.phone,
+          notes: data.notes,
+        }
+      : {},
   })
 
   const onSubmit = async ({ fullname, email, phone, notes }: FormFields) => {
-    await supabase.from("tenants").insert({ fullname, email, phone, notes })
+    if (data) {
+      await supabase
+        .from("tenants")
+        .update({ fullname, email, phone, notes })
+        .eq("id", data.id)
+    } else {
+      await supabase.from("tenants").insert({ fullname, email, phone, notes })
+    }
     router.push("/tenants")
   }
 

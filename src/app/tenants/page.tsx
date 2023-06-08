@@ -1,10 +1,9 @@
 import { Menu } from "@/components/Menu"
+import { TenantActions } from "@/components/TenantActions"
 import { supabase } from "@/lib/supabaseClient"
+import { Tenant } from "@/schema/tenants"
 import dayjs from "dayjs"
 import Link from "next/link"
-import { Database } from "../../lib/database.types"
-
-export type Tenant = Database["public"]["Tables"]["tenants"]["Row"]
 
 const TenantsPage = async () => {
   const { data } = await supabase.from("tenants").select()
@@ -24,6 +23,7 @@ const TenantsPage = async () => {
             <th>Details</th>
             <th>Phone</th>
             <th>Created at</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +35,9 @@ const TenantsPage = async () => {
               </td>
               <td>{phone}</td>
               <td>{dayjs(created_at).format("MMM DD, YYYY")}</td>
+              <td>
+                <TenantActions id={id} />
+              </td>
             </tr>
           ))}
         </tbody>
