@@ -4,7 +4,6 @@ import { supabase } from "@/lib/supabaseClient"
 import { Property } from "@/schema/properties"
 import { zodResolver } from "@hookform/resolvers/zod"
 import clsx from "clsx"
-import { revalidatePath } from "next/cache"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -49,8 +48,6 @@ export const PropertyForm = ({ data }: Props) => {
     } else {
       await supabase.from("properties").insert({ name, monthly, notes })
     }
-
-    revalidatePath("/properties")
     router.push("/properties")
   }
 

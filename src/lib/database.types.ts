@@ -86,6 +86,43 @@ export interface Database {
           }
         ]
       }
+      invoices: {
+        Row: {
+          amount: number
+          contract_id: string
+          created_at: string
+          due_date: string | null
+          id: number
+          items: Json
+          notes: string | null
+        }
+        Insert: {
+          amount: number
+          contract_id: string
+          created_at?: string
+          due_date?: string | null
+          id?: number
+          items: Json
+          notes?: string | null
+        }
+        Update: {
+          amount?: number
+          contract_id?: string
+          created_at?: string
+          due_date?: string | null
+          id?: number
+          items?: Json
+          notes?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoices_contract_id_tenants_id_fk"
+            columns: ["contract_id"]
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       properties: {
         Row: {
           created_at: string

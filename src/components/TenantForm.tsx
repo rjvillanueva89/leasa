@@ -4,7 +4,6 @@ import { supabase } from "@/lib/supabaseClient"
 import { Tenant } from "@/schema/tenants"
 import { zodResolver } from "@hookform/resolvers/zod"
 import clsx from "clsx"
-import { revalidatePath } from "next/cache"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -51,8 +50,6 @@ export const TenantForm = ({ data }: Props) => {
     } else {
       await supabase.from("tenants").insert({ fullname, email, phone, notes })
     }
-
-    revalidatePath("/tenants")
     router.push("/tenants")
   }
 

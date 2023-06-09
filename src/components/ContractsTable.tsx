@@ -19,7 +19,8 @@ export const ContractsTable = ({ data }: Props) => {
     <table className="table">
       <thead>
         <tr>
-          <th>Name</th>
+          <th>Tenant</th>
+          <th>Property</th>
           <th>Monthly</th>
           <th>Created at</th>
           <th>Actions</th>
@@ -29,10 +30,8 @@ export const ContractsTable = ({ data }: Props) => {
         {data.map(({ id, tenants, properties, monthly, created_at }) => {
           return (
             <tr key={id}>
-              <td>
-                {tenants.fullname}
-                <small className="block">{properties.name}</small>
-              </td>
+              <td>{tenants.fullname}</td>
+              <td>{properties.name}</td>
               <td>{monthly}</td>
               <td>{dayjs(created_at).format("MMM DD, YYYY")}</td>
               <td>

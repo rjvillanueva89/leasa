@@ -5,7 +5,6 @@ import { Property } from "@/schema/properties"
 import { Tenant } from "@/schema/tenants"
 import { zodResolver } from "@hookform/resolvers/zod"
 import clsx from "clsx"
-import { revalidatePath } from "next/cache"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -16,7 +15,7 @@ const FormSchema = z.object({
   tenant_id: z.string().min(1),
   property_id: z.string().min(1),
   start_date: z.string().min(1),
-  monthly: z.string().min(1),
+  monthly: z.string(),
   notes: z.string().nullable(),
 })
 
@@ -66,8 +65,6 @@ export const ContractForm = ({ data, tenants, properties }: Props) => {
         .from("contracts")
         .insert({ tenant_id, property_id, start_date, monthly, notes })
     }
-
-    revalidatePath("/contracts")
     router.push("/contracts")
   }
 
