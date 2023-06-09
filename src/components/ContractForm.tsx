@@ -5,6 +5,7 @@ import { Property } from "@/schema/properties"
 import { Tenant } from "@/schema/tenants"
 import { zodResolver } from "@hookform/resolvers/zod"
 import clsx from "clsx"
+import { revalidatePath } from "next/cache"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -22,7 +23,7 @@ const FormSchema = z.object({
 type FormFields = z.infer<typeof FormSchema>
 
 interface Props {
-  data: TenantPropertyContract
+  data?: TenantPropertyContract
   tenants: Pick<Tenant, "id" | "fullname">[]
   properties: Pick<Property, "id" | "name">[]
 }
@@ -65,6 +66,8 @@ export const ContractForm = ({ data, tenants, properties }: Props) => {
         .from("contracts")
         .insert({ tenant_id, property_id, start_date, monthly, notes })
     }
+
+    revalidatePath("/contracts")
     router.push("/contracts")
   }
 
