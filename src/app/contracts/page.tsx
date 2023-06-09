@@ -1,8 +1,17 @@
+import {
+  ContractsTable,
+  TenantPropertyContract,
+} from "@/components/ContractsTable"
 import { Menu } from "@/components/Menu"
-import { PropertyTable } from "@/components/PropertyTable"
+import { supabase } from "@/lib/supabaseClient"
 import Link from "next/link"
 
-const ContractsPage = () => {
+const ContractsPage = async () => {
+  const { data } = await supabase
+    .from("contracts")
+    .select(`*, tenants (id, fullname), properties ( id, name )`)
+  const contracts = data as TenantPropertyContract[]
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -11,7 +20,7 @@ const ContractsPage = () => {
           New Contract
         </Link>
       </div>
-      <PropertyTable data={[]} />
+      <ContractsTable data={contracts} />
     </>
   )
 }

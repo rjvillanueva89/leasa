@@ -12,8 +12,8 @@ import { z } from "zod"
 import { Button } from "./Button"
 
 const FormSchema = z.object({
-  tenant: z.string().min(1),
-  property: z.string().min(1),
+  tenant_id: z.string().min(1),
+  property_id: z.string().min(1),
   start_date: z.string().min(1),
   monthly: z.string().min(1),
   notes: z.string().nullable(),
@@ -38,7 +38,7 @@ export const ContractForm = () => {
   })
 
   const onSubmit = async (data: FormFields) => {
-    console.log(data)
+    await supabase.from("contracts").insert(data)
     router.push("/contracts")
   }
 
@@ -69,9 +69,9 @@ export const ContractForm = () => {
         <select
           className={clsx(
             "select rounded-none",
-            errors.property && "select-error"
+            errors.property_id && "select-error"
           )}
-          {...register("property")}
+          {...register("property_id")}
         >
           <option value="">Select Property</option>
           {properties?.map((property) => (
@@ -88,9 +88,9 @@ export const ContractForm = () => {
         <select
           className={clsx(
             "select rounded-none",
-            errors.tenant && "select-error"
+            errors.tenant_id && "select-error"
           )}
-          {...register("tenant")}
+          {...register("tenant_id")}
         >
           <option value="">Select Tenant</option>
           {tenants?.map((tenant) => (

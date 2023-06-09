@@ -40,30 +40,36 @@ export interface Database {
           end_date: string | null
           id: string
           monthly: number
+          notes: string | null
           property_id: string
           start_date: string
           status: string | null
           tenant_id: string
+          updated_at: string | null
         }
         Insert: {
           created_at?: string
           end_date?: string | null
           id?: string
           monthly: number
+          notes?: string | null
           property_id: string
           start_date: string
           status?: string | null
           tenant_id: string
+          updated_at?: string | null
         }
         Update: {
           created_at?: string
           end_date?: string | null
           id?: string
           monthly?: number
+          notes?: string | null
           property_id?: string
           start_date?: string
           status?: string | null
           tenant_id?: string
+          updated_at?: string | null
         }
         Relationships: [
           {
