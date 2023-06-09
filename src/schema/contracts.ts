@@ -23,8 +23,10 @@ export const contracts = pgTable("contracts", {
   start_date: date("start_date").notNull(),
   end_date: date("end_date"),
   monthly: numeric("monthly").notNull(),
-  status: text("status", { enum: ["active", "inactive"] }),
+  status: text("status", { enum: ["active", "inactive"] }).default("active"),
+  notes: text("notes"),
   created_at: timestamp("created_at").defaultNow().notNull(),
+  updated_at: timestamp("updated_at"),
 })
 
 export type Contract = InferModel<typeof contracts>

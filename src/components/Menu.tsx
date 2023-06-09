@@ -17,6 +17,7 @@ type Links = {
 const LINK_ITEMS: Links[] = [
   { label: "Tenants", link: "/tenants" },
   { label: "Properties", link: "/properties" },
+  { label: "Contracts", link: "/contracts" },
 ]
 
 export const Menu = ({ label }: Props) => {

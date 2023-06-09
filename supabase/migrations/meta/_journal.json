@@ -71,6 +71,13 @@
       "when": 1686265592689,
       "tag": "0009_sweet_guardian",
       "breakpoints": false
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1686268268927,
+      "tag": "0010_last_firebird",
+      "breakpoints": false
     }
   ]
 }
