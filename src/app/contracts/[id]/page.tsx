@@ -1,6 +1,8 @@
 import { ContractForm } from "@/components/ContractForm"
 import { TenantPropertyContract } from "@/components/ContractsTable"
 import { supabase } from "@/lib/supabaseClient"
+import { Property } from "@/schema/properties"
+import { Tenant } from "@/schema/tenants"
 import Link from "next/link"
 
 interface Props {
@@ -15,7 +17,15 @@ const EditContract = async ({ params }: Props) => {
     .single()
   const contract = data as TenantPropertyContract
 
-  console.log(contract)
+  const { data: dataTenants } = await supabase
+    .from("tenants")
+    .select(`id, fullname`)
+  const tenants = dataTenants as Pick<Tenant, "id" | "fullname">[]
+
+  const { data: dataProperties } = await supabase
+    .from("properties")
+    .select(`id, name`)
+  const properties = dataProperties as Pick<Property, "id" | "name">[]
 
   return (
     <>
@@ -25,7 +35,7 @@ const EditContract = async ({ params }: Props) => {
           Back
         </Link>
       </div>
-      <ContractForm data={contract} />
+      <ContractForm data={contract} tenants={tenants} properties={properties} />
     </>
   )
 }

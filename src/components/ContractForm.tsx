@@ -6,7 +6,6 @@ import { Tenant } from "@/schema/tenants"
 import { zodResolver } from "@hookform/resolvers/zod"
 import clsx from "clsx"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "./Button"
@@ -21,17 +20,15 @@ const FormSchema = z.object({
 })
 
 type FormFields = z.infer<typeof FormSchema>
-type TenantOption = Pick<Tenant, "id" | "fullname">
-type PropertyOption = Pick<Property, "id" | "name">
 
 interface Props {
   data: TenantPropertyContract
+  tenants: Pick<Tenant, "id" | "fullname">[]
+  properties: Pick<Property, "id" | "name">[]
 }
 
-export const ContractForm = ({ data }: Props) => {
+export const ContractForm = ({ data, tenants, properties }: Props) => {
   const router = useRouter()
-  const [tenants, setTenants] = useState<TenantOption[] | null>()
-  const [properties, setProperties] = useState<PropertyOption[] | null>()
 
   const {
     register,
@@ -42,6 +39,8 @@ export const ContractForm = ({ data }: Props) => {
     resolver: zodResolver(FormSchema),
     defaultValues: data
       ? {
+          tenant_id: data.tenant_id,
+          property_id: data.property_id,
           start_date: data.start_date,
           monthly: data.monthly,
           notes: data.notes,
@@ -53,26 +52,6 @@ export const ContractForm = ({ data }: Props) => {
     await supabase.from("contracts").insert(data)
     router.push("/contracts")
   }
-
-  const getTenants = async () => {
-    const { data } = await supabase.from("tenants").select("id, fullname")
-    setTenants(data as TenantOption[])
-  }
-
-  const getProperties = async () => {
-    const { data } = await supabase.from("properties").select("id, name")
-    setProperties(data as PropertyOption[])
-  }
-
-  useEffect(() => {
-    getTenants()
-    getProperties()
-
-    if (data) {
-      setValue("tenant_id", data.tenant_id)
-      setValue("property_id", data.property_id)
-    }
-  }, [])
 
   return (
     <form
