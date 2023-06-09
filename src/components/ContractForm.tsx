@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "./Button"
+import { TenantPropertyContract } from "./ContractsTable"
 
 const FormSchema = z.object({
   tenant_id: z.string().min(1),
@@ -20,11 +21,14 @@ const FormSchema = z.object({
 })
 
 type FormFields = z.infer<typeof FormSchema>
-
 type TenantOption = Pick<Tenant, "id" | "fullname">
 type PropertyOption = Pick<Property, "id" | "name">
 
-export const ContractForm = () => {
+interface Props {
+  data: TenantPropertyContract
+}
+
+export const ContractForm = ({ data }: Props) => {
   const router = useRouter()
   const [tenants, setTenants] = useState<TenantOption[] | null>()
   const [properties, setProperties] = useState<PropertyOption[] | null>()
@@ -32,9 +36,17 @@ export const ContractForm = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormFields>({
     resolver: zodResolver(FormSchema),
+    defaultValues: data
+      ? {
+          start_date: data.start_date,
+          monthly: data.monthly,
+          notes: data.notes,
+        }
+      : {},
   })
 
   const onSubmit = async (data: FormFields) => {
@@ -55,6 +67,11 @@ export const ContractForm = () => {
   useEffect(() => {
     getTenants()
     getProperties()
+
+    if (data) {
+      setValue("tenant_id", data.tenant_id)
+      setValue("property_id", data.property_id)
+    }
   }, [])
 
   return (
@@ -62,25 +79,6 @@ export const ContractForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center gap-4"
     >
-      <div className="form-control w-full max-w-sm">
-        <label className="label">
-          <span className="label-text">Property</span>
-        </label>
-        <select
-          className={clsx(
-            "select rounded-none",
-            errors.property_id && "select-error"
-          )}
-          {...register("property_id")}
-        >
-          <option value="">Select Property</option>
-          {properties?.map((property) => (
-            <option key={property.id} value={property.id}>
-              {property.name}
-            </option>
-          ))}
-        </select>
-      </div>
       <div className="form-control w-full max-w-sm">
         <label className="label">
           <span className="label-text">Tenant</span>
@@ -96,6 +94,25 @@ export const ContractForm = () => {
           {tenants?.map((tenant) => (
             <option key={tenant.id} value={tenant.id}>
               {tenant.fullname}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="form-control w-full max-w-sm">
+        <label className="label">
+          <span className="label-text">Property</span>
+        </label>
+        <select
+          className={clsx(
+            "select rounded-none",
+            errors.property_id && "select-error"
+          )}
+          {...register("property_id")}
+        >
+          <option value="">Select Property</option>
+          {properties?.map((property) => (
+            <option key={property.id} value={property.id}>
+              {property.name}
             </option>
           ))}
         </select>

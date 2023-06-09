@@ -2,6 +2,7 @@ import { Contract } from "@/schema/contracts"
 import { Property } from "@/schema/properties"
 import { Tenant } from "@/schema/tenants"
 import dayjs from "dayjs"
+import { ContractActions } from "./ContractActions"
 
 export interface TenantPropertyContract extends Contract {
   tenants: Pick<Tenant, "id" | "fullname">
@@ -34,7 +35,9 @@ export const ContractsTable = ({ data }: Props) => {
               </td>
               <td>{monthly}</td>
               <td>{dayjs(created_at).format("MMM DD, YYYY")}</td>
-              <td>-</td>
+              <td>
+                <ContractActions id={id} />
+              </td>
             </tr>
           )
         })}
