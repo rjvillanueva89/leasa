@@ -48,8 +48,23 @@ export const ContractForm = ({ data, tenants, properties }: Props) => {
       : {},
   })
 
-  const onSubmit = async (data: FormFields) => {
-    await supabase.from("contracts").insert(data)
+  const onSubmit = async ({
+    tenant_id,
+    property_id,
+    start_date,
+    monthly,
+    notes,
+  }: FormFields) => {
+    if (data) {
+      await supabase
+        .from("contracts")
+        .update({ tenant_id, property_id, start_date, monthly, notes })
+        .eq("id", data.id)
+    } else {
+      await supabase
+        .from("contracts")
+        .insert({ tenant_id, property_id, start_date, monthly, notes })
+    }
     router.push("/contracts")
   }
 
