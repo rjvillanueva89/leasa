@@ -18,7 +18,7 @@ export const Separator = ({ label, labelPosition = "center" }: Props) => {
         "text-right": labelPosition === "right",
       })}
     >
-      <span className="mx-2 h-2 bg-black p-2 text-sm font-light text-gray-400 relative">
+      <span className="mx-2 h-2 bg-white dark:bg-black p-2 text-sm text-gray-400 relative">
         {label}
       </span>
       <hr className="-mt-2.5" />

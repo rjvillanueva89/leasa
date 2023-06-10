@@ -19,8 +19,7 @@ const FormSchema = z.object({
   contract_id: z.string().min(1),
   title: z.string().min(1),
   items: ItemSchema.array(),
-  total: z.number(),
-  due_date: z.date(),
+  due_date: z.string(),
 })
 
 type FormFields = z.infer<typeof FormSchema>
@@ -62,8 +61,17 @@ export const InvoiceForm = ({ contracts }: Props) => {
     if (!!totalAmount) setTotal(totalAmount)
   }, [watchedItems, totalAmount, setTotal])
 
+  const onSubmit = (data: FormFields) => {
+    console.log(data)
+  }
+
+  console.log(errors)
+
   return (
-    <form className="flex flex-col items-center gap-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col items-center gap-4"
+    >
       <div className="form-control w-full max-w-sm">
         <label className="label">
           <span className="label-text">Tenant Contract</span>
@@ -89,7 +97,7 @@ export const InvoiceForm = ({ contracts }: Props) => {
         </label>
         <input
           type="text"
-          placeholder="Full name"
+          placeholder="Title"
           className={clsx(
             "input input-bordered w-full max-w-sm rounded-none",
             errors.title && "input-error"
@@ -103,12 +111,11 @@ export const InvoiceForm = ({ contracts }: Props) => {
         </label>
         <input
           type="date"
-          placeholder="Full name"
           className={clsx(
             "input input-bordered w-full max-w-sm rounded-none",
             errors.title && "input-error"
           )}
-          {...register("title")}
+          {...register("due_date")}
         />
       </div>
       <Separator label="Items" />
@@ -146,16 +153,16 @@ export const InvoiceForm = ({ contracts }: Props) => {
           )
         })}
       </div>
-      <button
-        type="button"
-        className="btn rounded-none"
-        onClick={() => append({ description: "", amount: "" })}
-      >
-        Add Item
-      </button>
       <Separator label="Total" />
       <span className="text-3xl font-bold">{total}</span>
-      <div className="flex w-full justify-end">
+      <div className="flex w-full justify-end gap-4">
+        <button
+          type="button"
+          className="btn rounded-none"
+          onClick={() => append({ description: "", amount: "" })}
+        >
+          Add Item
+        </button>
         <Button type="submit" loading={isSubmitting}>
           Submit
         </Button>
