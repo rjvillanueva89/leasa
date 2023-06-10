@@ -18,6 +18,7 @@ const LINK_ITEMS: Links[] = [
   { label: "Tenants", link: "/tenants" },
   { label: "Properties", link: "/properties" },
   { label: "Contracts", link: "/contracts" },
+  { label: "Invoices", link: "/invoices" },
 ]
 
 export const Menu = ({ label }: Props) => {

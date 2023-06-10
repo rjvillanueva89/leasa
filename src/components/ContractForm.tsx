@@ -33,7 +33,6 @@ export const ContractForm = ({ data, tenants, properties }: Props) => {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormFields>({
     resolver: zodResolver(FormSchema),
@@ -130,7 +129,7 @@ export const ContractForm = ({ data, tenants, properties }: Props) => {
           <span className="label-text">Monthly</span>
         </label>
         <input
-          type="text"
+          type="number"
           placeholder="Monthly"
           className={clsx(
             "input input-bordered w-full max-w-sm rounded-none",
