@@ -1,37 +1,35 @@
 import { Tenant } from "@/schema/tenants"
 import dayjs from "dayjs"
+import { Column, Datatable } from "./Datatable"
 import { TenantActions } from "./TenantActions"
 
 interface Props {
   data: Tenant[]
 }
 
+const columns: Column<Tenant>[] = [
+  {
+    label: "Details",
+    cell: ({ fullname, email }) => {
+      return (
+        <>
+          {fullname}
+          <small className="block">{email}</small>
+        </>
+      )
+    },
+  },
+  { label: "Phone", cell: ({ phone }) => phone },
+  {
+    label: "Created at",
+    cell: ({ created_at }) => dayjs(created_at).format("MMM DD,YYYY"),
+  },
+  {
+    label: "Actions",
+    cell: ({ id }) => <TenantActions id={id} />,
+  },
+]
+
 export const TenantsTable = ({ data }: Props) => {
-  return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th>Details</th>
-          <th>Phone</th>
-          <th>Created at</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map(({ id, fullname, email, phone, created_at }) => (
-          <tr key={id}>
-            <td>
-              {fullname}
-              <small className="block">{email}</small>
-            </td>
-            <td>{phone}</td>
-            <td>{dayjs(created_at).format("MMM DD, YYYY")}</td>
-            <td>
-              <TenantActions id={id} />
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  )
+  return <Datatable columns={columns} data={data} />
 }
