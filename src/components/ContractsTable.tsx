@@ -1,3 +1,4 @@
+import { formatCurrencyPHP } from "@/lib/currency"
 import { Contract } from "@/schema/contracts"
 import { Property } from "@/schema/properties"
 import { Tenant } from "@/schema/tenants"
@@ -14,7 +15,10 @@ const columns: Column<TenantPropertyContract>[] = [
     label: "Tenant",
     cell: ({ tenants }) => tenants.fullname,
   },
-  { label: "Monthly", cell: ({ monthly }) => monthly },
+  {
+    label: "Monthly",
+    cell: ({ monthly }) => formatCurrencyPHP(parseInt(monthly)),
+  },
   {
     label: "Status",
     cell: ({ status }) => <StatusToggle isChecked={status === "active"} />,

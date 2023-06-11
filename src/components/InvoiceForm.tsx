@@ -1,8 +1,11 @@
 "use client"
 
+import { formatCurrencyPHP } from "@/lib/currency"
 import { supabase } from "@/lib/supabaseClient"
+import { Invoice } from "@/schema/invoices"
 import { zodResolver } from "@hookform/resolvers/zod"
 import clsx from "clsx"
+import dayjs from "dayjs"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
@@ -21,17 +24,19 @@ const FormSchema = z.object({
   contract_id: z.string().min(1),
   title: z.string().min(1),
   due_date: z.string(),
-  notes: z.string(),
+  notes: z.string().nullable(),
   items: ItemSchema.array(),
 })
 
 type FormFields = z.infer<typeof FormSchema>
+type ItemFields = z.infer<typeof ItemSchema>
 
 interface Props {
+  data?: Invoice
   contracts: TenantPropertyContract[]
 }
 
-export const InvoiceForm = ({ contracts }: Props) => {
+export const InvoiceForm = ({ data, contracts }: Props) => {
   const router = useRouter()
   const [total, setTotal] = useState(0)
   const {
@@ -42,9 +47,17 @@ export const InvoiceForm = ({ contracts }: Props) => {
     control,
   } = useForm<FormFields>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      items: [{ description: "", amount: "" }],
-    },
+    defaultValues: data
+      ? {
+          contract_id: data.contract_id,
+          title: data.title,
+          due_date: dayjs(data.due_date).format("YYYY-MM-DD"),
+          notes: data.notes,
+          items: data.items as ItemFields[],
+        }
+      : {
+          items: [{ description: "", amount: "" }],
+        },
   })
 
   const {
@@ -176,7 +189,7 @@ export const InvoiceForm = ({ contracts }: Props) => {
         })}
       </div>
       <Separator label="Total" />
-      <span className="text-3xl font-bold">{total}</span>
+      <span className="text-3xl font-bold">{formatCurrencyPHP(total)}</span>
       <div className="flex w-full justify-end gap-4">
         <button
           type="button"
