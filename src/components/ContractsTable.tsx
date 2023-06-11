@@ -13,7 +13,6 @@ interface Props {
 }
 
 export const ContractsTable = ({ data }: Props) => {
-  console.log(data)
   return (
     <table className="table">
       <thead>

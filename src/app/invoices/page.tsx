@@ -1,12 +1,25 @@
+import { InvoiceTable } from "@/components/InvoiceTable"
 import { Menu } from "@/components/Menu"
-import { PropertyTable } from "@/components/PropertyTable"
 import { supabase } from "@/lib/supabaseClient"
+import { Invoice } from "@/schema/invoices"
 import { Property } from "@/schema/properties"
+import { Tenant } from "@/schema/tenants"
 import Link from "next/link"
 
+export interface InvoiceContract extends Invoice {
+  contracts: {
+    tenants: Tenant
+    properties: Property
+  }
+}
+
 const InvoicesPage = async () => {
-  const { data } = await supabase.from("properties").select()
-  const properties = data as Property[]
+  const { data } = await supabase
+    .from("invoices")
+    .select(
+      `*, contracts (id, tenants ( id, fullname ), properties ( id, name ))`
+    )
+  const invoices = data as InvoiceContract[]
 
   return (
     <>
@@ -16,7 +29,7 @@ const InvoicesPage = async () => {
           New Invoice
         </Link>
       </div>
-      <PropertyTable data={properties} />
+      <InvoiceTable data={invoices} />
     </>
   )
 }

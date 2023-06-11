@@ -92,6 +92,20 @@
       "when": 1686307814136,
       "tag": "0012_lazy_bastion",
       "breakpoints": false
+    },
+    {
+      "idx": 13,
+      "version": "5",
+      "when": 1686441432074,
+      "tag": "0013_wooden_santa_claus",
+      "breakpoints": false
+    },
+    {
+      "idx": 14,
+      "version": "5",
+      "when": 1686442786071,
+      "tag": "0014_tiresome_hobgoblin",
+      "breakpoints": false
     }
   ]
 }

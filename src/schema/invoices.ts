@@ -8,13 +8,14 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core"
-import { tenants } from "./tenants"
+import { contracts } from "./contracts"
 
 export const invoices = pgTable("invoices", {
   id: serial("id").primaryKey(),
   contract_id: uuid("contract_id")
     .notNull()
-    .references(() => tenants.id),
+    .references(() => contracts.id),
+  title: text("title").notNull(),
   items: jsonb("items").notNull(),
   amount: numeric("amount").notNull(),
   notes: text("notes"),
@@ -22,4 +23,4 @@ export const invoices = pgTable("invoices", {
   created_at: timestamp("created_at").defaultNow().notNull(),
 })
 
-export type Tenant = InferModel<typeof tenants>
+export type Invoice = InferModel<typeof invoices>

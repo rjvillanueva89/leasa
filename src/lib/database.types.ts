@@ -95,6 +95,7 @@ export interface Database {
           id: number
           items: Json
           notes: string | null
+          title: string
         }
         Insert: {
           amount: number
@@ -104,6 +105,7 @@ export interface Database {
           id?: number
           items: Json
           notes?: string | null
+          title: string
         }
         Update: {
           amount?: number
@@ -113,12 +115,13 @@ export interface Database {
           id?: number
           items?: Json
           notes?: string | null
+          title?: string
         }
         Relationships: [
           {
-            foreignKeyName: "invoices_contract_id_tenants_id_fk"
+            foreignKeyName: "invoices_contract_id_contracts_id_fk"
             columns: ["contract_id"]
-            referencedRelation: "tenants"
+            referencedRelation: "contracts"
             referencedColumns: ["id"]
           }
         ]

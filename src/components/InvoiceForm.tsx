@@ -1,7 +1,9 @@
 "use client"
 
+import { supabase } from "@/lib/supabaseClient"
 import { zodResolver } from "@hookform/resolvers/zod"
 import clsx from "clsx"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
@@ -18,8 +20,9 @@ const ItemSchema = z.object({
 const FormSchema = z.object({
   contract_id: z.string().min(1),
   title: z.string().min(1),
-  items: ItemSchema.array(),
   due_date: z.string(),
+  notes: z.string(),
+  items: ItemSchema.array(),
 })
 
 type FormFields = z.infer<typeof FormSchema>
@@ -29,6 +32,7 @@ interface Props {
 }
 
 export const InvoiceForm = ({ contracts }: Props) => {
+  const router = useRouter()
   const [total, setTotal] = useState(0)
   const {
     register,
@@ -61,11 +65,19 @@ export const InvoiceForm = ({ contracts }: Props) => {
     if (!!totalAmount) setTotal(totalAmount)
   }, [watchedItems, totalAmount, setTotal])
 
-  const onSubmit = (data: FormFields) => {
-    console.log(data)
-  }
+  const onSubmit = async ({
+    contract_id,
+    title,
+    due_date,
+    notes,
+    items,
+  }: FormFields) => {
+    await supabase
+      .from("invoices")
+      .insert({ contract_id, title, due_date, notes, items, amount: total })
 
-  console.log(errors)
+    router.push("/invoices")
+  }
 
   return (
     <form
@@ -118,6 +130,16 @@ export const InvoiceForm = ({ contracts }: Props) => {
           {...register("due_date")}
         />
       </div>
+      <div className="form-control w-full max-w-sm">
+        <label className="label">
+          <span className="label-text">Notes</span>
+        </label>
+        <textarea
+          className="textarea textarea-bordered rounded-none"
+          placeholder="Notes"
+          {...register("notes")}
+        ></textarea>
+      </div>
       <Separator label="Items" />
       <div className="flex flex-col gap-4">
         {itemFields.map((item, key) => {
@@ -158,7 +180,7 @@ export const InvoiceForm = ({ contracts }: Props) => {
       <div className="flex w-full justify-end gap-4">
         <button
           type="button"
-          className="btn rounded-none"
+          className="btn btn-ghost rounded-none"
           onClick={() => append({ description: "", amount: "" })}
         >
           Add Item
