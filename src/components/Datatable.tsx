@@ -25,7 +25,7 @@ const DataCell = ({ label, render }: { label: string; render: ReactNode }) => {
   return (
     <td
       data-title={label}
-      className="flex justify-between whitespace-nowrap before:text-xs before:uppercase before:text-gray-500 before:content-[attr(data-title)] md:table-cell md:py-4 md:before:content-[]"
+      className="flex justify-between whitespace-nowrap before:font-bold before:text-xs before:uppercase before:text-gray-500 before:content-[attr(data-title)] md:table-cell md:py-4 md:before:content-[]"
     >
       {render}
     </td>
@@ -39,7 +39,7 @@ interface DataRowProps<T> {
 
 export const DataRow = <T extends {}>({ columns, data }: DataRowProps<T>) => {
   return (
-    <tr className="md:table-row">
+    <tr className="w-full block md:w-auto md:table-row">
       {columns.map(({ label, cell }, key) => (
         <DataCell key={key} label={label} render={cell(data)} />
       ))}

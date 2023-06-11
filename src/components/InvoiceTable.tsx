@@ -9,12 +9,12 @@ const columns: Column<InvoiceContract>[] = [
     label: "Title",
     cell: ({ title, contracts: { tenants, properties } }) => {
       return (
-        <>
+        <span className="text-right md:text-left">
           {title}
           <small className="block">
             {properties.name} - {tenants.fullname}
           </small>
-        </>
+        </span>
       )
     },
   },
@@ -27,7 +27,7 @@ const columns: Column<InvoiceContract>[] = [
     cell: ({ created_at }) => dayjs(created_at).format("MM/DD/YYYY"),
   },
   {
-    label: "",
+    label: "Actions",
     cell: ({ id }) => <InvoiceActions id={id} />,
   },
 ]

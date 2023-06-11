@@ -23,7 +23,7 @@ const ItemSchema = z.object({
 const FormSchema = z.object({
   contract_id: z.string().min(1),
   title: z.string().min(1),
-  due_date: z.string(),
+  due_date: z.string().nullable(),
   notes: z.string().nullable(),
   items: ItemSchema.array(),
 })
@@ -51,7 +51,9 @@ export const InvoiceForm = ({ data, contracts }: Props) => {
       ? {
           contract_id: data.contract_id,
           title: data.title,
-          due_date: dayjs(data.due_date).format("YYYY-MM-DD"),
+          due_date: data.due_date
+            ? dayjs(data.due_date).format("YYYY-MM-DD")
+            : null,
           notes: data.notes,
           items: data.items as ItemFields[],
         }

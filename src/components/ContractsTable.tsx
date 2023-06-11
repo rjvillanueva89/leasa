@@ -24,7 +24,7 @@ const columns: Column<TenantPropertyContract>[] = [
     cell: ({ status }) => <StatusToggle isChecked={status === "active"} />,
   },
   {
-    label: "",
+    label: "Actions",
     cell: ({ id }) => <ContractActions id={id} />,
   },
 ]
