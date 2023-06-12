@@ -1,5 +1,5 @@
+import dayjs from "@/lib/dayjs"
 import { Tenant } from "@/schema/tenants"
-import dayjs from "dayjs"
 import { Column, Datatable } from "./Datatable"
 import { TenantActions } from "./TenantActions"
 

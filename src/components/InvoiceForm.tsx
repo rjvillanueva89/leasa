@@ -1,11 +1,11 @@
 "use client"
 
 import { formatCurrencyPHP } from "@/lib/currency"
+import dayjs from "@/lib/dayjs"
 import { supabase } from "@/lib/supabaseClient"
 import { Invoice } from "@/schema/invoices"
 import { zodResolver } from "@hookform/resolvers/zod"
 import clsx from "clsx"
-import dayjs from "dayjs"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useFieldArray, useForm } from "react-hook-form"

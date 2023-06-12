@@ -15,7 +15,7 @@ const FormSchema = z.object({
   tenant_id: z.string().min(1),
   property_id: z.string().min(1),
   start_date: z.string().min(1),
-  monthly: z.string(),
+  monthly: z.number(),
   notes: z.string().nullable(),
 })
 
@@ -41,7 +41,7 @@ export const ContractForm = ({ data, tenants, properties }: Props) => {
           tenant_id: data.tenant_id,
           property_id: data.property_id,
           start_date: data.start_date,
-          monthly: data.monthly,
+          monthly: parseInt(data.monthly),
           notes: data.notes,
         }
       : {},

@@ -1,6 +1,6 @@
 import { InvoiceContract } from "@/app/invoices/page"
 import { formatCurrencyPHP } from "@/lib/currency"
-import dayjs from "dayjs"
+import dayjs from "@/lib/dayjs"
 import { Column, Datatable } from "./Datatable"
 import { InvoiceActions } from "./InvoiceActions"
 
