@@ -87,11 +87,18 @@ export const InvoiceForm = ({ data, contracts }: Props) => {
     notes,
     items,
   }: FormFields) => {
-    await supabase
+    const { data } = await supabase
       .from("invoices")
-      .insert({ contract_id, title, due_date, notes, items, amount: total })
-
-    router.push("/invoices")
+      .insert({
+        contract_id,
+        title,
+        due_date: due_date === "" ? null : due_date,
+        notes,
+        items,
+        amount: total,
+      })
+      .select()
+      .single()
   }
 
   return (
@@ -191,7 +198,9 @@ export const InvoiceForm = ({ data, contracts }: Props) => {
         })}
       </div>
       <Separator label="Total" />
-      <span className="text-3xl font-bold">{formatCurrencyPHP(total)}</span>
+      <span className="text-3xl font-bold">
+        {total ? formatCurrencyPHP(total) : <>&#8369;0.00</>}
+      </span>
       <div className="flex w-full justify-end gap-4">
         <button
           type="button"
