@@ -8,7 +8,7 @@ interface Props {
   params: { id: string }
 }
 
-const EditInvoice = async ({ params }: Props) => {
+const EditInvoicePage = async ({ params }: Props) => {
   const { data } = await supabase
     .from("contracts")
     .select(`*, tenants (id, fullname), properties (id, name)`)
@@ -33,4 +33,5 @@ const EditInvoice = async ({ params }: Props) => {
   )
 }
 
-export default EditInvoice
+export const revalidate = 60
+export default EditInvoicePage

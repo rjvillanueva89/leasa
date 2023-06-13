@@ -9,7 +9,7 @@ interface Props {
   params: { id: string }
 }
 
-const EditContract = async ({ params }: Props) => {
+const EditContractPage = async ({ params }: Props) => {
   const { data } = await supabase
     .from("contracts")
     .select(`*, tenants (id, fullname), properties ( id, name )`)
@@ -40,4 +40,5 @@ const EditContract = async ({ params }: Props) => {
   )
 }
 
-export default EditContract
+export const revalidate = 60
+export default EditContractPage
