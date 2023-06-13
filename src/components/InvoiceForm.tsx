@@ -99,6 +99,8 @@ export const InvoiceForm = ({ data, contracts }: Props) => {
       })
       .select()
       .single()
+
+    fetch("/api/revalidate?path=/invoices")
   }
 
   return (
