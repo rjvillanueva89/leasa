@@ -19,6 +19,9 @@ export const invoices = pgTable("invoices", {
   items: jsonb("items").notNull(),
   amount: numeric("amount").notNull(),
   notes: text("notes"),
+  status: text("status", { enum: ["pending", "sent", "paid"] }).default(
+    "pending"
+  ),
   due_date: timestamp("due_date"),
   created_at: timestamp("created_at").defaultNow().notNull(),
 })

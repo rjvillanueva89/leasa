@@ -95,6 +95,7 @@ export interface Database {
           id: number
           items: Json
           notes: string | null
+          status: string | null
           title: string
         }
         Insert: {
@@ -105,6 +106,7 @@ export interface Database {
           id?: number
           items: Json
           notes?: string | null
+          status?: string | null
           title: string
         }
         Update: {
@@ -115,6 +117,7 @@ export interface Database {
           id?: number
           items?: Json
           notes?: string | null
+          status?: string | null
           title?: string
         }
         Relationships: [

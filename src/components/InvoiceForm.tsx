@@ -87,9 +87,22 @@ export const InvoiceForm = ({ data, contracts }: Props) => {
     notes,
     items,
   }: FormFields) => {
-    const { data } = await supabase
-      .from("invoices")
-      .insert({
+    if (data) {
+      await supabase
+        .from("invoices")
+        .update({
+          contract_id,
+          title,
+          due_date: due_date === "" ? null : due_date,
+          notes,
+          items,
+          amount: total,
+        })
+        .eq("id", data.id)
+
+      await fetch("/api/revalidate?path=/invoices/[id]")
+    } else {
+      await supabase.from("invoices").insert({
         contract_id,
         title,
         due_date: due_date === "" ? null : due_date,
@@ -97,10 +110,9 @@ export const InvoiceForm = ({ data, contracts }: Props) => {
         items,
         amount: total,
       })
-      .select()
-      .single()
 
-    await fetch("/api/revalidate?path=/invoices")
+      await fetch("/api/revalidate?path=/invoices")
+    }
 
     router.push("/invoices")
   }
