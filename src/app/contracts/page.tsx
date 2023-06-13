@@ -25,4 +25,5 @@ const ContractsPage = async () => {
   )
 }
 
+export const revalidate = 60
 export default ContractsPage

@@ -21,4 +21,5 @@ const PropertiesPage = async () => {
   )
 }
 
+export const revalidate = 60
 export default PropertiesPage

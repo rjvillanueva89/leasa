@@ -11,7 +11,7 @@ import { Button } from "./Button"
 
 const FormSchema = z.object({
   name: z.string().min(1),
-  monthly: z.string().min(1),
+  monthly: z.number(),
   notes: z.string().nullable(),
 })
 
@@ -33,7 +33,7 @@ export const PropertyForm = ({ data }: Props) => {
     defaultValues: data
       ? {
           name: data.name,
-          monthly: data.monthly,
+          monthly: parseInt(data.monthly),
           notes: data.notes,
         }
       : {},
