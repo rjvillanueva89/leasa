@@ -46,11 +46,11 @@ export const PropertyForm = ({ data }: Props) => {
         .update({ name, monthly, notes })
         .eq("id", data.id)
 
-      fetch("/api/revalidate?path=/properties/[id]")
+      await fetch("/api/revalidate?path=/properties/[id]")
     } else {
       await supabase.from("properties").insert({ name, monthly, notes })
 
-      fetch("/api/revalidate?path=/properties")
+      await fetch("/api/revalidate?path=/properties")
     }
 
     router.push("/properties")

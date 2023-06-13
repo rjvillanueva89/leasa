@@ -48,11 +48,11 @@ export const TenantForm = ({ data }: Props) => {
         .update({ fullname, email, phone, notes })
         .eq("id", data.id)
 
-      fetch("/api/revalidate?path=/tenants/[id]")
+      await fetch("/api/revalidate?path=/tenants/[id]")
     } else {
       await supabase.from("tenants").insert({ fullname, email, phone, notes })
 
-      fetch("/api/revalidate?path=/tenants")
+      await fetch("/api/revalidate?path=/tenants")
     }
 
     router.push("/tenants")

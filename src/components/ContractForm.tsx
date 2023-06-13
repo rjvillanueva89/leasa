@@ -60,13 +60,13 @@ export const ContractForm = ({ data, tenants, properties }: Props) => {
         .update({ tenant_id, property_id, start_date, monthly, notes })
         .eq("id", data.id)
 
-      fetch("/api/revalidate?path=/contracts/[id]")
+      await fetch("/api/revalidate?path=/contracts/[id]")
     } else {
       await supabase
         .from("contracts")
         .insert({ tenant_id, property_id, start_date, monthly, notes })
 
-      fetch("/api/revalidate?path=/contracts")
+      await fetch("/api/revalidate?path=/contracts")
     }
 
     router.push("/contracts")
