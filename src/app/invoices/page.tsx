@@ -11,13 +11,14 @@ export interface InvoiceContract extends Invoice {
     tenants: Tenant
     properties: Property
   }
+  items: { description: string; amount: string }[]
 }
 
 const InvoicesPage = async () => {
   const { data } = await supabase
     .from("invoices")
     .select(
-      `*, contracts (id, tenants ( id, fullname ), properties ( id, name ))`
+      `*, contracts (id, tenants ( id, fullname, email ), properties ( id, name ))`
     )
   const invoices = data as InvoiceContract[]
 

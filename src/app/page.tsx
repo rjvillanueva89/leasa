@@ -1,9 +1,10 @@
-import Link from "next/link"
+import ClientProviders from "@/components/Auth/ClientProvider"
+import SignupForm from "@/components/Auth/SignupForm"
 
 export default function Home() {
   return (
-    <div className="text-center">
-      <Link href="/tenants">{`Let's get started!`}</Link>
-    </div>
+    <ClientProviders>
+      <SignupForm />
+    </ClientProviders>
   )
 }

@@ -1,38 +1,39 @@
 "use client"
 
-import { Invoice } from "@/schema/invoices"
-import { Property } from "@/schema/properties"
-import { Tenant } from "@/schema/tenants"
+import { InvoiceContract } from "@/app/invoices/page"
 import Link from "next/link"
-import { IconPaperAirplane, IconPencilSquare } from "./Icons/Outline"
+import {
+  IconPaperAirplane,
+  IconPencilSquare,
+  IconReceiptPercent,
+} from "./Icons/Outline"
 
 interface Props {
-  id: number
+  data: InvoiceContract
 }
 
-interface InvoiceContractTenantProperty extends Invoice {
-  contracts: {
-    tenants: Pick<Tenant, "id" | "fullname" | "email">
-    properties: Pick<Property, "id" | "name">
-  }
-}
-
-export const InvoiceActions = async ({ id }: Props) => {
-  const handleSendMail = () => {
-    console.log(id)
+export const InvoiceActions = ({ data }: Props) => {
+  const handleSendMail = async () => {
+    await fetch(`/api/mail?invoice_id=${data.id}`)
   }
 
   return (
     <>
       <Link
         className="btn btn-ghost btn-sm rounded-none"
-        href={`/invoices/${id}`}
+        href={`/invoices/${data.id}`}
       >
         <IconPencilSquare />
       </Link>
+      <Link
+        className="btn btn-ghost btn-sm rounded-none"
+        href={`/invoices/view/${data.id}`}
+      >
+        <IconReceiptPercent />
+      </Link>
       <button
         type="button"
-        className="btn btn-ghost btn-sm rounded-none"
+        className="btn btn-ghost btn-sm rounded-none hidden"
         onClick={handleSendMail}
       >
         <IconPaperAirplane />

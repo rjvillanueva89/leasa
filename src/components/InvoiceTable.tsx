@@ -28,7 +28,7 @@ const columns: Column<InvoiceContract>[] = [
   },
   {
     label: "Actions",
-    cell: ({ id }) => <InvoiceActions id={id} />,
+    cell: (row) => <InvoiceActions data={row} />,
   },
 ]
 

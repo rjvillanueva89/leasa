@@ -3,7 +3,7 @@ import { InvoiceForm } from "@/components/InvoiceForm"
 import { supabase } from "@/lib/supabaseClient"
 import Link from "next/link"
 
-const NewInvoice = async () => {
+const NewInvoicePage = async () => {
   const { data } = await supabase
     .from("contracts")
     .select(`*, tenants (id, fullname), properties (id, name)`)
@@ -22,4 +22,4 @@ const NewInvoice = async () => {
   )
 }
 
-export default NewInvoice
+export default NewInvoicePage
