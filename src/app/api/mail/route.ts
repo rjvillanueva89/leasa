@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
   const msg = {
     to: "rj.villanueva89@gmail.com", // Change to your verified sender
     from: "rj.villanueva89@gmail.com", // Change to your verified sender
-    subject: "data.title",
+    subject: "title",
     text: "and easy to do anywhere, even with Node.js",
     html: "<strong>and easy to do anywhere, even with Node.js</strong>",
   }
