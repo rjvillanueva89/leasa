@@ -1,8 +1,10 @@
 "use client"
 
+import { Database } from "@/lib/database.types"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import clsx from "clsx"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { IconBars3 } from "./Icons/Outline"
 
 interface Props {
@@ -23,6 +25,13 @@ const LINK_ITEMS: Links[] = [
 
 export const Menu = ({ label }: Props) => {
   const pathname = usePathname()
+  const router = useRouter()
+
+  const handleSignOut = async () => {
+    const supabase = createClientComponentClient<Database>()
+    await supabase.auth.signOut()
+    router.push("/")
+  }
   return (
     <div className="dropdown dropdown-hover z-50">
       <h1 tabIndex={0} className="btn btn-ghost rounded-none mb-1">
@@ -45,6 +54,11 @@ export const Menu = ({ label }: Props) => {
             </li>
           )
         })}
+        <li>
+          <button className="rounded-none mt-1" onClick={handleSignOut}>
+            Sign Out
+          </button>
+        </li>
       </ul>
     </div>
   )

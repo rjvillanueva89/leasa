@@ -14,7 +14,7 @@ export default function SignupForm() {
         appearance={{ theme: ThemeSupa }}
         theme="dark"
         providers={[]}
-        redirectTo="http://nextapp.com:3000/auth/callback"
+        redirectTo={`${process.env.NEXT_PUBLIC_BASE_URL}/tenants`}
       />
     </div>
   )
