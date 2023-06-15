@@ -40,5 +40,5 @@ const EditContractPage = async ({ params }: Props) => {
   )
 }
 
-export const revalidate = 60
+export const revalidate = 10
 export default EditContractPage

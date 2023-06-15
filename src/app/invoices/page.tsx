@@ -35,5 +35,5 @@ const InvoicesPage = async () => {
   )
 }
 
-export const revalidate = 60
+export const revalidate = 10
 export default InvoicesPage

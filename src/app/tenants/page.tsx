@@ -4,8 +4,12 @@ import { supabase } from "@/lib/supabaseClient"
 import { Tenant } from "@/schema/tenants"
 import Link from "next/link"
 
+const getTenants = () => {
+  return supabase.from("tenants").select()
+}
+
 const TenantsPage = async () => {
-  const { data } = await supabase.from("tenants").select()
+  const { data } = await getTenants()
   const tenants = data as Tenant[]
 
   return (
@@ -21,5 +25,5 @@ const TenantsPage = async () => {
   )
 }
 
-export const revalidate = 60
+export const revalidate = 10
 export default TenantsPage
